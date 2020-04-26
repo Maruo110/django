@@ -56,7 +56,7 @@
 					{% for trend in trend_list %}
 						<tr>
 							<td><p>{{ trend.pk }}</p></td>
-							<td><p>{{ trend.trendword }}</p></td>
+							<td><a href="{% url 'detail' trend.pk %}">{{ trend.trendword }}</a></td>
 							<td><p>{{trend.syutokuymd|date:"Y/m/d"}}</p></td>
 							<td><p>{{ trend.syutokutime|date:"G:i:s" }}</p></td>
 							<td><p>{{ trend.tweetvolume }}</p></td>
