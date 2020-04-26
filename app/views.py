@@ -8,6 +8,55 @@ from .filters import ItemFilter
 from .forms import ItemForm
 from .models import Item
 
+from .models import Trend, Tweet, Url
+
+# トレンド画面
+class TrendView(LoginRequiredMixin, FilterView):
+
+    model = Trend
+
+    # デフォルトの並び順を新しい順とする
+    queryset = Trend.objects.all().order_by('-trendword')
+
+    # django-filter用設定
+    #filterset_class = ItemFilter
+    strict = False
+
+    # 1ページあたりの表示件数
+    paginate_by = 10
+
+    # 検索条件をセッションに保存する
+    def get(self, request, **kwargs):
+        if request.GET:
+            request.session['query'] = request.GET
+        else:
+            request.GET = request.GET.copy()
+            if 'query' in request.session.keys():
+                for key in request.session['query'].keys():
+                    request.GET[key] = request.session['query'][key]
+
+        return super().get(request, **kwargs)
+
+
+# トレンド関連ツイート画面
+class TrendTweetView(LoginRequiredMixin, FilterView):
+    model = Tweet
+
+# ツイート関連URL画面
+class TweetUrlView(LoginRequiredMixin, FilterView):
+    model = Url
+
+
+# 詳細画面
+class TrendDetailView(LoginRequiredMixin, DetailView):
+    model = Trend
+
+
+
+#**************************************************************************************************
+# 以下、ひな形
+#**************************************************************************************************
+
 
 # Create your views here.
 # 検索一覧画面
@@ -39,7 +88,7 @@ class ItemFilterView(LoginRequiredMixin, FilterView):
 
 # 詳細画面
 class ItemDetailView(LoginRequiredMixin, DetailView):
-    model = Item
+    model = Trend
 
 
 # 登録画面
