@@ -15,7 +15,7 @@ urlpatterns = [
     path('delete/<int:pk>/', ItemDeleteView.as_view(), name='delete'),
     path('',  TrendView.as_view(), name='index'),                       # 追加
     #path('detail/<int:pk>/', TrendDetailView.as_view(), name='detail'),        # 削除
-    path('trendtweet/<int:pk>/', TrendTweetView.as_view(), name='trendtweet'),
+    path('trendtweet/<int:pk>/<str:trendword>/', TrendTweetView.as_view(), name='trendtweet'),
     #path('trendtweet/', TrendTweetView.as_view(), name='trendtweet'),   # 追加　→　削除
     path('tweeturl/', TweetUrlView.as_view(), name='tweeturl'),         # 追加
 
