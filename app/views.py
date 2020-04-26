@@ -16,7 +16,8 @@ class TrendView(LoginRequiredMixin, FilterView):
     model = Trend
 
     # デフォルトの並び順を新しい順とする
-    queryset = Trend.objects.all().order_by('-trendword')
+    #queryset = Trend.objects.all().order_by('-trendword')
+    queryset = Trend.objects.all().order_by('-tweetvolume')
 
     # django-filter用設定
     #filterset_class = ItemFilter
@@ -40,7 +41,32 @@ class TrendView(LoginRequiredMixin, FilterView):
 
 # トレンド関連ツイート画面
 class TrendTweetView(LoginRequiredMixin, FilterView):
+
     model = Tweet
+
+    # デフォルトの並び順を新しい順とする
+    #queryset = Trend.objects.all().order_by('-trendword')
+    queryset = Tweet.objects.all().order_by('-userid')
+
+    # django-filter用設定
+    #filterset_class = ItemFilter
+    strict = False
+
+    # 1ページあたりの表示件数
+    paginate_by = 10
+
+    # 検索条件をセッションに保存する
+    def get(self, request, **kwargs):
+        if request.GET:
+            request.session['query'] = request.GET
+        else:
+            request.GET = request.GET.copy()
+            if 'query' in request.session.keys():
+                for key in request.session['query'].keys():
+                    request.GET[key] = request.session['query'][key]
+
+        return super().get(request, **kwargs)
+
 
 # ツイート関連URL画面
 class TweetUrlView(LoginRequiredMixin, FilterView):

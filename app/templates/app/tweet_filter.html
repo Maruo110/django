@@ -46,21 +46,25 @@
 				<table border="1">
 					<tr>
 						<th>ID</th>
-						<th>トレンドワード</th>
-						<th>ツイート数</th>
-						<th>平均感情スコア</th>
-						<th>取得日</th>
-						<th>取得時間</th>
+						<th>ユーザーID</th>
+						<th>ツイートテキスト</th>
+						<th>RT数</th>
+						<th>FV数</th>
+						<th>感情スコア</th>
+						<th>ツイート日時</th>
+						<th>リンク</th>
 					</tr>
 
-					{% for trend in trend_list %}
+					{% for tweet in tweet_list %}
 						<tr>
-							<td><p>{{ trend.pk }}</p></td>
-							<td><a href="{% url 'trendtweet' trend.pk %}">{{ trend.trendword }}</a></td>
-							<td><p>{{trend.syutokuymd|date:"Y/m/d"}}</p></td>
-							<td><p>{{ trend.syutokutime|date:"G:i:s" }}</p></td>
-							<td><p>{{ trend.tweetvolume }}</p></td>
-							<td><p>{{ trend.avetweetsentimentscore }}</p></td>
+							<td><p>{{ tweet.pk }}</p></td>
+							<td><p>{{ tweet.userid }}</p></td>
+							<td><p>{{ tweet.tweettext }}</p></td>
+							<td><p>{{ tweet.retweetvolume }}</p></td>
+							<td><p>{{ tweet.favoritevolume }}</p></td>
+							<td><p>{{ tweet.tweetsentimentscore }}</p></td>
+							<td><p>{{ tweet.tweettime|date:"Y/m/d G:i:s"}}</p></td>
+							<td><a href={{ tweet.tweeturl }}>Link</a></td>
 						</tr>
 
 				{% empty %}
